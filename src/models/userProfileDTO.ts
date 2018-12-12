@@ -1,5 +1,3 @@
-import { DateTime } from "ionic-angular";
-
 export class UserProfileDTO{
          public Id :number; 
          public IsAthenticated :boolean;
