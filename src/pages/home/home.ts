@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { NumberService } from '../../services/number.service';
-import { NumberDTO } from '../../models/NumberDTO';
+import { NumberDTO } from '../../models/numberDTO';
 import { DatePipe } from '@angular/common';
 
 @Component({

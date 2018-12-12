@@ -17,7 +17,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { NumberService } from '../services/number.service';
 import { UserService } from '../services/user.service';
-import { NumberDTO } from '../models/NumberDTO';
+import { NumberDTO } from '../models/numberDTO';
 import { UserProfileDTO } from '../models/userProfileDTO';
 import { AuthInterceptor } from './auth.interceptor';
 import { IonicStorageModule } from '@ionic/storage';
