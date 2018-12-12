@@ -1,4 +1,4 @@
-<ion-header >
+<ion-header>
   <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -9,32 +9,27 @@
 
 <ion-content padding>
 
-<div class="card-background-page">
-  
-<ion-card>
-    <img src="../../assets/imgs/card-bg.png"/>
-    <div *ngIf="todayNumber==0" class="card-title">N/A</div>
-    <div *ngIf="todayNumber!=0" class="card-title">{{todayNumber}}</div>
-    <div class="card-subtitle">Today number</div>
-  </ion-card>
-</div>
+  <div class="card-background-page">
 
-<div>
-<h3>Number of last one month</h3>
-    <ion-item *ngFor="let n of numbers"> 
+    <ion-card>
+      <img src="../../assets/imgs/card-bg.png" />
+      <div *ngIf="todayNumber==0" class="card-title">N/A</div>
+      <div *ngIf="todayNumber!=0" class="card-title">{{todayNumber}}</div>
+      <div class="card-subtitle">Today number</div>
+    </ion-card>
+  </div>
+
+  <div>
+    <ion-list>
+      <ion-list-header>
+        Number of last one month
+      </ion-list-header>
+      <ion-item *ngFor="let n of numbers">
         <ion-icon *ngIf="n.Number!=0" name="mail-open" item-start></ion-icon>
         <ion-icon *ngIf="n.Number==0" name="mail" item-start></ion-icon>
         {{n.Day}}, {{n.DeclaredDate | date}}
         <ion-badge color="dark" item-end> {{n.Number==0?"N/A" : n.Number.toString()}}</ion-badge>
       </ion-item>
-<!-- 
-<ion-list *ngFor="let n of numbers">
-    <ion-item>
-      <ion-thumbnail item-start>
-       <span class="numberCircle"> {{n.Number==0?"N/A" : n.Number.toString()}} </span>
-      </ion-thumbnail>
-      <h2>{{n.Day}}, {{n.DeclaredDate | date}}</h2>
-    </ion-item>
-  </ion-list> -->
-</div>
+    </ion-list>    
+  </div>
 </ion-content>

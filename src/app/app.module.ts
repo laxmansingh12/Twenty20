@@ -23,6 +23,7 @@ import { AuthInterceptor } from './auth.interceptor';
 import { IonicStorageModule } from '@ionic/storage';
 import { Device } from '@ionic-native/device';
 import { AppUpdate } from '@ionic-native/app-update';
+import { AppVersion } from '@ionic-native/app-version';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { AppUpdate } from '@ionic-native/app-update';
     StatusBar,
     Device,
     AppUpdate,
+    AppVersion,
     NumberService,
     UserService,
     SplashScreen,
