@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Declare Number</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngIf="error!=''">
+        <ion-card-content color="danger">
+            {{error}}
+        </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+
+        <ion-item>
+
+            <ion-label floating>Date</ion-label>
+            <ion-datetime color="dark" displayFormat="MMM DD YYYY" [(ngModel)]="dateStr"></ion-datetime>
+
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Number</ion-label>
+            <ion-input type="number" [(ngModel)]="number.Number"></ion-input>
+        </ion-item>
+
+    </ion-list>
+
+    <div padding>
+        <button ion-button color="primary" block (click)="declareNumber()">Declare Number</button>
+    </div>
+</ion-content>
