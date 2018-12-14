@@ -60,13 +60,14 @@ export class MyApp {
       this.checkForAdminDevice();
       this.checkUserLoggedIn(null);
       this.message = this.platform.is("android").toString();
-      if (!(this.platform.is('core') || this.platform.is('mobileweb'))) {
+      
+      if (this.platform.is('cordova')) {
         this.appVersion.getVersionNumber().then(res => {
           this.version = res;
         });
         const updateUrl = AppConfig.API_URL + '/app/get/update-android-xml';
         if (this.platform.is("android")) {
-          this.appUpdate.checkAppUpdate(updateUrl).then(() => { console.log('Update available') });
+          //this.appUpdate.checkAppUpdate(updateUrl).then(() => { console.log('Update available') });
         }
       }
 
