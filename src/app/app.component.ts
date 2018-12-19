@@ -3,7 +3,6 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
-
 import { HomePage } from '../pages/home/home';
 //import { ListPage } from '../pages/list/list';
 import { InfoPage } from '../pages/info/info';
@@ -55,22 +54,23 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.checkForAdminDevice();
-      this.checkUserLoggedIn(null);
+
       this.message = this.platform.is("android").toString();
-      
+
       if (this.platform.is('cordova')) {
         this.appVersion.getVersionNumber().then(res => {
           this.version = res;
         });
         const updateUrl = AppConfig.API_URL + '/app/get/update-android-xml';
         if (this.platform.is("android")) {
-          //this.appUpdate.checkAppUpdate(updateUrl).then(() => { console.log('Update available') });
+          console.log(updateUrl);
+          this.appUpdate.checkAppUpdate(updateUrl).then(() => { console.log('Update available') });
         }
       }
-
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+      this.checkForAdminDevice();
+      this.checkUserLoggedIn(null);
     });
   }
 
@@ -90,7 +90,6 @@ export class MyApp {
       error => {
         console.error(JSON.stringify(error));
       });
-
   }
 
   checkUserLoggedIn(page) {
