@@ -35,7 +35,6 @@ export class HomePage {
 
     this._numberService.getNumbers().subscribe(response => {
       const data: any = response;
-      console.log(data);
       this.numbers = data;
 
       this.numbers.forEach(n => {

@@ -4,17 +4,21 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
-//import { ListPage } from '../pages/list/list';
 import { InfoPage } from '../pages/info/info';
 import { AdminNumberPage } from '../pages/admin-number/admin.number';
 import { LoginPage } from '../pages/login/login';
 import { PasswordPage } from '../pages/password/password';
 import { UserProfileDTO } from '../models/userProfileDTO';
 import { UserService } from '../services/user.service';
+import { AppService } from '../services/app.service';
 import { Device } from '@ionic-native/device';
 import { AppUpdate } from '@ionic-native/app-update';
 import { AppConfig } from './app.config';
 import { AppVersion } from '@ionic-native/app-version';
+//import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+//import { File } from '@ionic-native/file';
+import { ToastController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,43 +39,94 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public storage: Storage,
     private userService: UserService,
+    private appService: AppService,
     private device: Device,
     private appUpdate: AppUpdate,
-    private appVersion: AppVersion
+    private appVersion: AppVersion,
+    //private transfer: FileTransfer, 
+    //private file: File,
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
   ) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Numbers', component: HomePage },
       { title: 'Info', component: InfoPage },
-      //{ title: 'Declare Number', component: AdminNumberPage },
-      //{ title: 'Change Password', component: PasswordPage }
-      //{ title: 'Login', component: LoginPage }
     ];
 
   }
 
   initializeApp() {
+    this.version = "demo";
     this.platform.ready().then(() => {
 
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
       this.message = this.platform.is("android").toString();
-
       if (this.platform.is('cordova')) {
         this.appVersion.getVersionNumber().then(res => {
           this.version = res;
+          this.checkUpdateAvailable();
+          // const updateUrl = AppConfig.API_URL + 'app/update.xml';
+          // if (this.platform.is("android")) {
+          //   this.appUpdate.checkAppUpdate(updateUrl).then(() => {
+          //      console.log('Update available');
+          //     }).catch(error => { console.error("catch: "+error); this.checkUpdateAvailable();});
+          // }
         });
-        const updateUrl = AppConfig.API_URL + '/app/get/update-android-xml';
-        if (this.platform.is("android")) {
-          console.log(updateUrl);
-          this.appUpdate.checkAppUpdate(updateUrl).then(() => { console.log('Update available') });
-        }
       }
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
       this.checkForAdminDevice();
       this.checkUserLoggedIn(null);
     });
+  }
+
+  checkUpdateAvailable() {
+    this.appService.checkVersion(this.version).subscribe(response => {
+      const isAvailable: any = response;
+      if (isAvailable) {
+        const confirm = this.alertCtrl.create({
+          title: 'Update available',
+          message: 'Do you want to download the latest app?',
+          buttons: [
+            {
+              text: 'No',
+              handler: () => {}
+            },
+            {
+              text: 'Download',
+              handler: () => {
+                this.downloadLatestApp();
+              }
+            }
+          ]
+        });
+        confirm.present();
+      }
+    },
+      error => {
+        console.error(JSON.stringify(error));
+      });
+  }
+
+  downloadLatestApp() {
+    const url = AppConfig.API_URL + 'app/twenty20.apk';
+    window.open(url,"_system","location=yes");
+    //const fileTransfer: FileTransferObject = this.transfer.create();
+    // fileTransfer.download(url, this.file.dataDirectory + 'twenty20.apk').then((entry) => {
+    //   console.log('download complete: ' + entry.toURL());
+    //   const toast = this.toastCtrl.create({
+    //     message: 'Latest app has been downloaded successfully',
+    //     duration: 3000
+    //   });
+    //   toast.present();
+    // }, (error) => {
+    //   const toast = this.toastCtrl.create({
+    //     message: 'Error ocurred on downloading: ' + JSON.stringify(error),
+    //     duration: 3000
+    //   });
+    //   toast.present();
+    // });
   }
 
   checkForAdminDevice() {
